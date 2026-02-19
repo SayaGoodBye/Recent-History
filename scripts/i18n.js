@@ -1,0 +1,1 @@
+export const i18n=(e,n)=>chrome.i18n.getMessage(e,n);

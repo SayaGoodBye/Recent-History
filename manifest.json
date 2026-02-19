@@ -1,0 +1,40 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Recent History",
+  "short_name": "Recent History",
+  "author": "Umar Sheikh",
+  "version": "99.9.99",
+  "manifest_version": 3,
+  "default_locale": "zh_CN",
+  "description": "__MSG_aboutText__",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "alarms",
+    "history",
+    "bookmarks",
+    "favicon"
+  ],
+  "icons": {
+    "16": "images/branding-icon16.png",
+    "32": "images/branding-icon32.png",
+    "48": "images/branding-icon48.png",
+    "128": "images/branding-icon128.png"
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "action": {
+    "default_icon": {
+      "19": "images/main-icon19.png",
+      "32": "images/main-icon32.png",
+      "38": "images/main-icon38.png",
+      "48": "images/main-icon48.png",
+      "128": "images/main-icon128.png"
+    },
+    "default_popup": "popup.html"
+  }
+}

@@ -1,0 +1,1 @@
+const state={ctrlState:"false",shiftState:"false",itemSelectedColor:"#ffcbd3",selectedItem:void 0,prh:void 0};export const getStateValue=t=>state[t];export const setStateValue=(t,e)=>{state[t]=e};

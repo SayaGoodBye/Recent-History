@@ -1,0 +1,1 @@
+import{getStorageItem}from"@src/scripts/storage";export const formatDate=async e=>{e*=1;let t=await getStorageItem("rh-date");const r=new Date(e);let a=r.getDate()+"",o=r.getMonth()+1+"";const g=r.getFullYear()+"";return 1===a.length&&(a="0"+a),1===o.length&&(o="0"+o),t=t.replace("dd",a),t=t.replace("mm",o),t=t.replace("yyyy",g),t};

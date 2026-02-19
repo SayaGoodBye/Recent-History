@@ -1,0 +1,1 @@
+import{i18n}from"@src/scripts/i18n";export const timeNow=(t,e)=>{let n="";const i=0===t?new Date:new Date(t);let r=i.getHours(),o=i.getMinutes();return"12"===e&&(n=r>11?" "+i18n("PM"):" "+i18n("AM"),0===r&&(r=12),r>12&&(r-=12)),r<10&&(r="0"+r),o<10&&(o="0"+o),r+":"+o+n};

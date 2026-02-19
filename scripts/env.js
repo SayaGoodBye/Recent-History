@@ -1,0 +1,1 @@
+export const mode=process.env.MODE||"development";export const isProd="production"===mode;export const isDev=!isProd;export const version=process.env.VERSION;

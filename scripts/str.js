@@ -1,0 +1,1 @@
+export const stripScript=t=>t.replace(/<script[^>]*>.*?<\/script>/gi,"");export const stripHtml=t=>stripScript(t).replace(/"/g,"&#34;").replace(/</g,"").replace(/>/g,"").replace(/\//g,"");export const truncateStr=(t,r,e)=>t.length>e?t.substring(r,e)+"...":t.substring(r,e);
