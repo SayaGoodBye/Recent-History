@@ -154,74 +154,19 @@
 
       const input = oldInput.cloneNode(true);
       oldInput.parentNode.replaceChild(input, oldInput);
+      input.value = "";
+      input.setAttribute("autocomplete", "off");
+      input.setAttribute("autocapitalize", "off");
+      input.setAttribute("autocorrect", "off");
+      input.setAttribute("spellcheck", "false");
 
       let seq = 0;
       let timer = null;
-      let selectedIndex = -1;
-
-      const getItems = () => Array.from(searchContainer.querySelectorAll("a.item"));
-      const applySelection = () => {
-        const items = getItems();
-        items.forEach((el, idx) => {
-          if (idx === selectedIndex) {
-            el.classList.add("kbd-selected");
-          } else {
-            el.classList.remove("kbd-selected");
-          }
-        });
-      };
-      const clearSelection = () => {
-        selectedIndex = -1;
-        applySelection();
-      };
-      const focusInput = () => {
-        input.focus();
-      };
-      const activateSelection = () => {
-        const items = getItems();
-        if (selectedIndex < 0 || selectedIndex >= items.length) return;
-        const url = items[selectedIndex].getAttribute("href") || "";
-        if (!url) return;
-        chrome.tabs.create({ url, active: true }, () => window.close());
-      };
-      const moveSelectionDown = () => {
-        const items = getItems();
-        if (!items.length) return;
-        if (selectedIndex < 0) {
-          selectedIndex = 0;
-          applySelection();
-          return;
-        }
-        if (selectedIndex >= items.length - 1) {
-          clearSelection();
-          focusInput();
-          return;
-        }
-        selectedIndex += 1;
-        applySelection();
-      };
-      const moveSelectionUp = () => {
-        const items = getItems();
-        if (!items.length) return;
-        if (selectedIndex < 0) {
-          selectedIndex = items.length - 1;
-          applySelection();
-          return;
-        }
-        if (selectedIndex <= 0) {
-          clearSelection();
-          focusInput();
-          return;
-        }
-        selectedIndex -= 1;
-        applySelection();
-      };
 
       const render = async () => {
         const currentSeq = ++seq;
         const q = input.value || "";
         if (q.trim().length < minQueryLength(q.trim())) {
-          clearSelection();
           defaultContainer.style.display = "block";
           searchContainer.style.display = "none";
           searchContainer.textContent = "";
@@ -232,7 +177,6 @@
         if (currentSeq !== seq) return;
 
         searchContainer.textContent = "";
-        clearSelection();
         if (!rows.length) {
           const noResults = document.createElement("div");
           noResults.className = "no-results";
@@ -253,32 +197,9 @@
         timer = window.setTimeout(render, 120);
       });
 
-      input.addEventListener("keydown", (ev) => {
-        const key = ev.key;
-        if (key === "ArrowDown" || key === "ArrowRight") {
-          if (searchContainer.style.display !== "block") return;
-          ev.preventDefault();
-          moveSelectionDown();
-          return;
-        }
-        if (key === "ArrowUp" || key === "ArrowLeft") {
-          if (searchContainer.style.display !== "block") return;
-          ev.preventDefault();
-          moveSelectionUp();
-          return;
-        }
-        if (key === "Enter") {
-          if (searchContainer.style.display !== "block") return;
-          if (selectedIndex < 0) return;
-          ev.preventDefault();
-          activateSelection();
-        }
-      });
-
       clearBtn.addEventListener("click", (ev) => {
         ev.preventDefault();
         input.value = "";
-        clearSelection();
         input.focus();
         defaultContainer.style.display = "block";
         searchContainer.style.display = "none";
